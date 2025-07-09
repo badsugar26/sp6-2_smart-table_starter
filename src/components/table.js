@@ -45,16 +45,13 @@ export function initTable(settings, onAction) {
         console.log(data);
         // @todo: #1.1 — преобразовать данные в массив строк на основе шаблона rowTemplate
         const nextRows = data.map(item => {
-            const row = cloneTemplate(rowTemplate);
+            const {container, elements} = cloneTemplate('row');
             Object.keys(item).forEach(key => {
-                if (key in row.elements && key !== 'id') {
-                console.log(`Key: ${key}, Value: ${item[key]}, Element:`, row.elements[key]);
-                row.elements[key].textContent = item[key];
-            } else {
-                console.log(`Элемент с ключом ${key} не найден в шаблоне rowTemplate.`);
+                if (elements[key]) {
+                elements[key].textContent = item[key];
             }
             });
-            return row;
+            return container;
         });
         root.elements.rows.replaceChildren(...nextRows);
     }
