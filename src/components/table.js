@@ -42,17 +42,16 @@ export function initTable(settings, onAction) {
 
 
     const render = (data) => {
-        console.log(data);
-        // @todo: #1.1 — преобразовать данные в массив строк на основе шаблона rowTemplate
         const nextRows = data.map(item => {
-            const {container, elements} = cloneTemplate('row');
+            const row = cloneTemplate(rowTemplate);
             Object.keys(item).forEach(key => {
-                if (elements[key]) {
-                elements[key].textContent = item[key];
-            }
+                if (row.elements[key]) {
+                    row.elements[key].textContent = item[key];
+                }
             });
-            return container;
+            return row.container; // Не забудьте вернуть строку после заполнения данных
         });
+
         root.elements.rows.replaceChildren(...nextRows);
     }
 

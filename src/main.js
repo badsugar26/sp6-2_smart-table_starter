@@ -21,8 +21,9 @@ const {data, ...indexes} = initData(sourceData);
  */
 function collectState() {
     const state = processFormData(new FormData(sampleTable.container));
-    const rowsPerPage = parseInt(state.rowsPerPage);    // приведём количество страниц к числу
+    const rowsPerPage = parseInt(state.rowsPerPage ?? 10);    // приведём количество страниц к числу
     const page = parseInt(state.page ?? 1);                // номер страницы по умолчанию 1 и тоже число
+    console.log("rowsPerPage:", rowsPerPage);
 
     return {                                            // расширьте существующий return вот так
         ...state,
@@ -56,12 +57,10 @@ const applyPagination = initPagination(
     sampleTable.pagination.elements,             // передаём сюда элементы пагинации, найденные в шаблоне
     (el, page, isCurrent) => {                    // и колбэк, чтобы заполнять кнопки страниц данными
         const input = el.querySelector('input');
-        console.log
         const label = el.querySelector('span');
         input.value = page;
         input.checked = isCurrent;
         label.textContent = page;
-        console.log('Возвращаемый результат:', result);
         return el;
     }
 ); 
